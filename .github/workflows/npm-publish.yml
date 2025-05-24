@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: Publish to NPM
+    name: Publish to NPM (only if version changed)
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +20,29 @@ jobs:
           node-version: 18
           registry-url: https://registry.npmjs.org/
 
+      - name: Get current version
+        id: current_version
+        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+
+      - name: Get previous version
+        id: previous_version
+        run: |
+          git fetch --depth=2 origin main
+          echo "version=$(git show HEAD^:package.json | jq -r .version)" >> $GITHUB_OUTPUT
+
+      - name: Check if version changed
+        id: version_check
+        run: |
+          echo "Current: ${{ steps.current_version.outputs.version }}"
+          echo "Previous: ${{ steps.previous_version.outputs.version }}"
+          if [ "${{ steps.current_version.outputs.version }}" == "${{ steps.previous_version.outputs.version }}" ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Publish package
+        if: steps.version_check.outputs.changed == 'true'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
