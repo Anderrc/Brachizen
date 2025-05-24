@@ -9,19 +9,8 @@ jobs:
         runs-on: ubuntu-latest
 
         name: deploy
-        if: "contains(github.event.head_commit.message , '[release]')"
 
         steps:
-            - uses: actions/checkout@v2
-
-            - name: Use Node.js
-              uses: actions/setup-node@v2
-              with:
-                  node-version: 14.x
-
-            - name: Install dependencies
-              run: npm install
-
             - name: Publish package
               env:
                   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
