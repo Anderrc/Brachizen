@@ -1,6 +1,6 @@
 {
   "name": "branchizen",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Herramienta para crear ramas Git con formato consistente",
   "main": "index.js",
   "scripts": {
@@ -11,9 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^13.1.0",
-    "inquirer": "^12.6.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "inquirer": "^12.6.1"
   },
   "bin": {
     "branchizen": "./src/index.js"
