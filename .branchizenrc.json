@@ -1,4 +1,12 @@
 {
-  "order": ["user", "description"],
-  "language": "es"
+  "order": [
+    "description",
+    "user",
+    "prefix"
+  ],
+  "questions": {
+   "description": "Descripción (en snake_case):" ,
+    "user":"Tu nombre de usuario:" ,
+    "prefix": "Prefijo:" 
+  }
 }

@@ -1,17 +1,75 @@
 # 🪄 Branchizen
 
-> Generador de nombres de ramas Git interactivo y configurable.  
-Ideal para equipos que siguen convenciones de nombres como `feature_FE_1234_fix_ui_bug_jdoe`.
+Generador interactivo y configurable de nombres de ramas Git  
+Ideal para equipos que siguen convenciones como:  
+`feature/FE_1234_fix_ui_bug_jdoe`
 
 ---
 
-## 🚀 Instalación
+## 🚀 ¿Qué es Branchizen?
+
+Branchizen facilita la creación de nombres de ramas consistentes, personalizados y alineados con las convenciones de tu equipo.  
+A través de un flujo interactivo, te guía paso a paso para construir ramas como:
+
+```
+feature/1234_fix_login_jdoe
+```
+
+---
+
+## ⚙️ Primeros pasos
+
+Antes de usar Branchizen por primera vez, es recomendable generar el archivo de configuración `.branchizenrc.json`, que define el orden y el texto de las preguntas que quieres personalizar.
+
+Puedes hacerlo manualmente o usando el comando interactivo:
+
+```bash
+branchizen config
+```
+
+Esto te permite seleccionar el orden de los campos que compondrán tu rama. Luego podrás editar el archivo manualmente para agregar más campos o cambiar los mensajes.
+
+---
+
+## 🛠️ Personalización: agrega nuevas preguntas
+
+Branchizen es altamente flexible y extensible. Puedes definir nuevas preguntas fácilmente para adaptar el nombre de la rama a tu flujo de trabajo.
+
+### ➕ ¿Cómo agregar nuevos campos?
+
+1. **Edita el archivo `.branchizenrc.json`**  
+   Agrega una nueva clave al array `order` y define el texto de la pregunta en el objeto `questions`.
+
+    Ejemplo:
+
+    ```json
+    {
+    	"order": ["ticket", "description", "user"],
+    	"questions": {
+    		"ticket": "ID del ticket:",
+    		"description": "Descripción (en snake_case):",
+    		"user": "Tu nombre de usuario:"
+    	}
+    }
+    ```
+
+2. **Guarda el archivo y ejecuta `branchizen`.**  
+   El flujo te pedirá los nuevos campos en el orden indicado.
+
+> 🧠 **Tip:** A futuro, agregar un nuevo campo es tan simple como:
+>
+> -   Añadirlo en el array `order`
+> -   Definir el mensaje correspondiente en `questions`
+
+---
+
+## 📦 Instalación
 
 ```bash
 npm install -g branchizen
 ```
 
-> Asegúrate de tener Node.js instalado en tu sistema.
+Requiere Node.js v14 o superior y Git instalado en el sistema.
 
 ---
 
@@ -20,34 +78,29 @@ npm install -g branchizen
 ### Crear una nueva rama
 
 ```bash
-branchizen
+npx branchizen
 ```
 
-Te preguntará de forma interactiva:
+Flujo típico:
 
-1. Tipo de rama (`feature`, `bugfix`, `hotfix`, `release`)
-2. Ticket, descripción, nombre de usuario y/o prefijo (según configuración)
-3. Confirmación para crear la rama con Git
+-   Selecciona el tipo de rama (`feature`, `bugfix`, `hotfix`, `release`)
+-   Responde las preguntas según tu configuración
+-   Confirma si deseas crear la rama con Git
 
-### Configurar orden de campos
+### Configurar orden de campos (opcional)
 
 ```bash
-branchizen config
+npx branchizen config
 ```
 
-Selecciona el orden de los siguientes campos:
-
-- `description`: descripción de la tarea (ej. `fix_login_bug`)
-- `user`: tu usuario (ej. `jdoe`)
-
-El orden determina cómo se genera el nombre de la rama.
+Este comando te permite elegir el orden de los campos interactivos definidos en `.branchizenrc.json`.
 
 ---
 
 ## 📁 Ejemplo de uso
 
 ```bash
-$ branchizen
+$ npx branchizen
 ✔ ¿Qué tipo de rama quieres crear? › feature
 ✔ Descripción (en snake_case): › add_login_screen
 ✔ Tu nombre de usuario: › jdoe
@@ -60,49 +113,39 @@ feature/add_login_screen_jdoe
 
 ---
 
-## ⚙️ Configuración local
+## 🧾 Archivo de configuración
 
-Branchizen guarda tu configuración en un archivo oculto:
+Branchizen guarda su configuración en un archivo oculto en el directorio raíz del proyecto:
 
 ```
 .branchizenrc.json
 ```
 
-Este archivo contiene el orden de campos que se utilizará al construir nombres de rama.
+Este archivo controla:
+
+-   El orden de los campos que forman el nombre de la rama
+-   El texto que se mostrará como prompt para cada campo
 
 ---
 
 ## ✅ Requisitos
 
-- Node.js v14 o superior
-- Git instalado y disponible en el PATH
-
----
-
-## 📦 Publicación del paquete
-
-Si deseas contribuir o hacer tu propia versión:
-
-```bash
-git clone https://github.com/tuusuario/branchizen.git
-cd branchizen
-npm install
-npm link   # Para usarlo localmente como CLI
-```
+-   Node.js v14 o superior
+-   Git instalado y disponible en el PATH
 
 ---
 
 ## 🧠 Ideas futuras
 
-- Validaciones por tipo de rama
-- Personalización por equipo/proyecto
-- Integración con sistemas de tickets (Jira, Linear, etc.)
+-   Validaciones personalizadas por tipo de rama
+-   Plantillas específicas por equipo/proyecto
+-   Integración con herramientas como Jira, Linear, Trello, etc.
 
 ---
 
-## 🧑‍💻 Autor
+## 👤 Autor
 
-Desarrollado por [Anderson Castaño](https://github.com/Anderrc)  
+Desarrollado por Anderson Castaño  
 Inspirado en la necesidad de mantener convenciones claras y consistentes en Git.
 
 ---
@@ -110,3 +153,4 @@ Inspirado en la necesidad de mantener convenciones claras y consistentes en Git.
 ## 📄 Licencia
 
 MIT
+

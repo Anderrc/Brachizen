@@ -22,7 +22,9 @@ function saveConfig(config) {
 }
 
 async function configure() {
-    const orderChoices = ['description', 'user'];
+    const config = loadConfig();
+
+    const orderChoices = config.order;
 
     const answer = await inquirer.prompt([
         {
@@ -30,11 +32,17 @@ async function configure() {
             name: 'order',
             message: 'Selecciona el orden de los campos:',
             choices: orderChoices.map(item => ({ name: item })),
-            validate: (input) => input.length === 3 || 'Debes seleccionar los 3 campos en algún orden.',
+            validate: (input) => input.length === 2 || 'Debes seleccionar los 3 campos en algún orden.',
         },
     ]);
 
-    saveConfig({ order: answer.order });
+    saveConfig({
+        order: answer.order,
+        questions: {
+            description: "Descripción (en snake_case):",
+            user: "Tu nombre de usuario:",
+        }
+    });
     console.log('✅ Configuración guardada en', configPath);
 }
 
@@ -67,10 +75,7 @@ async function createBranch() {
 
     // Preguntas dinámicas según el orden del usuario
     const dynamicPrompts = config.order.map((key) => {
-        const messageMap = {
-            description: 'Descripción (en snake_case):',
-            user: 'Tu nombre de usuario:',
-        };
+        const messageMap = config.questions
 
         return {
             type: 'input',
