@@ -14,7 +14,13 @@ function loadConfig() {
     } catch (e) {
         console.error('Error al leer configuración:', e);
     }
-    return { order: ['description', 'user'] }; // default
+    return {
+        order: ['description', 'user'],
+        questions: {
+            description: "Descripción (en snake_case):",
+            user: "Tu nombre de usuario:",
+        }
+    }; // default
 }
 
 function saveConfig(config) {
