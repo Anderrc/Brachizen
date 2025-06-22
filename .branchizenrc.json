@@ -1,12 +1,15 @@
 {
+  "description": "Ramas orientadas a releases, incluye versión y fecha de despliegue",
   "order": [
+    "version",
     "description",
-    "user",
-    "prefix"
+    "date"
   ],
   "questions": {
-   "description": "Descripción (en snake_case):" ,
-    "user":"Tu nombre de usuario:" ,
-    "prefix": "Prefijo:" 
-  }
+    "version": "Número de versión (ej: v1.2.3):",
+    "description": "Nombre o cambio principal del release (usa snake_case):",
+    "date": "Fecha planificada (YYYYMMDD):"
+  },
+  "pattern": "release/[version]_[description]_[date]",
+  "standard-branch-name": "release-heavy"
 }
